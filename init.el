@@ -38,7 +38,7 @@
  '(custom-safe-themes
    '("8b6506330d63e7bc5fb940e7c177a010842ecdda6e1d1941ac5a81b13191020e" "ff24d14f5f7d355f47d53fd016565ed128bf3af30eb7ce8cae307ee4fe7f3fd0" "2e05569868dc11a52b08926b4c1a27da77580daa9321773d92822f7a639956ce" "991ca4dbb23cab4f45c1463c187ac80de9e6a718edc8640003892a2523cb6259" default))
  '(package-selected-packages
-   '(which-key rainbow-delimiters doom-themes all-the-icons doom-modeline ivy Ivy use-package)))
+   '(counsel ivy-rich which-key rainbow-delimiters doom-themes all-the-icons doom-modeline ivy Ivy use-package)))
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -60,7 +60,17 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-;; 
+;;
+
+(use-package counsel
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x b" . counsel-ibuffer)
+	 ("C-x C-f" . counsel-find-file)
+	 :map minibuffer-local-map
+	 ("C-r" . counsel-minibuffer-history)
+	 )
+  :config
+  (setq ivy-initial-inputs-alist nil)) ;; Don't start searches with ^
 (use-package ivy
   :bind (("C-s" . swiper)
          :map ivy-minibuffer-map
@@ -76,8 +86,10 @@
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
   :config
-  (ivy-mode 1))
-
+  (counsel-mode 1))
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
 
 (use-package doom-modeline
   :ensure t
@@ -96,7 +108,7 @@
   (doom-themes-visual-bell-config)
   ;; Enable custom neotree theme (all-the-icons must be installed!)
   (doom-themes-neotree-config)
-  ;; or for treemacs users
+
   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
