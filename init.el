@@ -38,7 +38,7 @@
  '(custom-safe-themes
    '("8b6506330d63e7bc5fb940e7c177a010842ecdda6e1d1941ac5a81b13191020e" "ff24d14f5f7d355f47d53fd016565ed128bf3af30eb7ce8cae307ee4fe7f3fd0" "2e05569868dc11a52b08926b4c1a27da77580daa9321773d92822f7a639956ce" "991ca4dbb23cab4f45c1463c187ac80de9e6a718edc8640003892a2523cb6259" default))
  '(package-selected-packages
-   '(counsel ivy-rich which-key rainbow-delimiters doom-themes all-the-icons doom-modeline ivy Ivy use-package)))
+   '(helpful counsel ivy-rich which-key rainbow-delimiters doom-themes all-the-icons doom-modeline ivy Ivy use-package)))
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -124,3 +124,15 @@
   :init (which-key-mode)
   :diminish which-key-mode
   :config (setq which-key-idle-delay 0.3))
+
+(use-package helpful
+  :ensure t
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . helpful-function)
+  ([remap describe-symbol] . helpful-symbol)
+  ([remap describe-variable] . helpful-variable)
+  ([remap describe-command] .  helpful-command)
+  ([remap describe-key] . helpful-key))
